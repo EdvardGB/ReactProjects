@@ -10,17 +10,51 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { IntlProvider } from 'react-intl';
+import { bindActionCreators } from 'redux'
+
+import * as humidityActions from './humidityActions';
 import messages from './messages';
 import Humidity from './humidity';
 
-export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  
+  componentDidMount(){
+    this.props.getHumidity();
+  }
+
   render() {
     return (
       <h1>
-        <FormattedMessage {...messages.header} />
-        <Humidity />
+        <Humidity humidity={this.props.humidity} timestamp={this.props.timestamp}/>
       </h1>
     );
   }
 }
+
+HomePage.propTypes = {
+	humidity: PropTypes.number,
+	timestamp: PropTypes.number,
+};
+
+
+function mapStateToProps(state){
+
+	return {
+		humidity: state.get('humidity').get('humidity'),
+		timestamp: state.get('humidity').get('timestamp')
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getHumidity: () => {dispatch(humidityActions.getHumidity())}
+  };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
