@@ -17,42 +17,59 @@ import { connect } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { bindActionCreators } from 'redux'
 
-import * as humidityActions from './humidityActions';
+import * as humidityActions from '../../actions/humidityActions';
+import * as buttonActions from '../../actions/buttonActions';
 import messages from './messages';
 import Humidity from './humidity';
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   
+  constructor(props){
+    super(props)
+    this.onClick = this.onClick.bind(this);
+  }
+
   componentDidMount(){
     this.props.getHumidity();
+  }
+
+  onClick(event){
+    this.props.buttonClick();
   }
 
   render() {
     return (
       <h1>
         <Humidity humidity={this.props.humidity} timestamp={this.props.timestamp}/>
+        <button onClick={this.onClick}>click me</button> {this.props.value}
       </h1>
     );
   }
 }
 
 HomePage.propTypes = {
-	humidity: PropTypes.number,
-	timestamp: PropTypes.number,
+	humidity: PropTypes.string,
+	timestamp: PropTypes.string,
+  value: PropTypes.number,
 };
+
+HomePage.defaultProps = {
+}
 
 
 function mapStateToProps(state){
 
 	return {
 		humidity: state.get('humidity').get('humidity'),
-		timestamp: state.get('humidity').get('timestamp')
+		timestamp: state.get('humidity').get('timestamp'),
+    value: state.get('button').get('value'),
 	};
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getHumidity: () => {dispatch(humidityActions.getHumidity())}
+    getHumidity: () => {humidityActions.getHumidity(dispatch)},
+    buttonClick: () => {dispatch(buttonActions.buttonClickAction())}
   };
 }
 
