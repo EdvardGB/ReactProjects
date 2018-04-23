@@ -9,6 +9,7 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import { routeReducer } from './routeReducer';
 import { humidityReducer } from './humidityReducer';
 import { buttonReducer } from './buttonReducer';
+import { formReducer } from './formReducer';
 
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 
@@ -19,6 +20,7 @@ export default function createReducer(injectedReducers) {
     humidity: humidityReducer,
     language: languageProviderReducer,
     button: buttonReducer,
+    form: formReducer,
     ...injectedReducers,
   });
 }

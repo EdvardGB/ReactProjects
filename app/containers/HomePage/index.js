@@ -16,41 +16,51 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { bindActionCreators } from 'redux'
+import { NavLink } from 'react-router-dom';
+
 
 import * as humidityActions from '../../actions/humidityActions';
-import * as buttonActions from '../../actions/buttonActions';
+import * as formActions from '../../actions/formActions';
+
+
 import messages from './messages';
 import Humidity from './humidity';
+import FormComponent from './Form/form';
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   
   constructor(props){
     super(props)
-    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount(){
     this.props.getHumidity();
   }
 
-  onClick(event){
-    this.props.buttonClick();
-  }
-
   render() {
     return (
-      <h1>
-        <Humidity humidity={this.props.humidity} timestamp={this.props.timestamp}/>
-        <button onClick={this.onClick}>click me</button> {this.props.value}
-      </h1>
+      <div>
+      <div>
+        <NavLink to="/SidePage">SidePage</NavLink>
+          </div>
+          <div> 
+            <Humidity humidity={this.props.humidity} timestamp={this.props.timestamp}/>
+            <div>
+              <FormComponent formData={this.props.formData} formChanged={this.props.formChanged}/>
+            </div>
+        </div>    
+      </div>
     );
   }
 }
 
 HomePage.propTypes = {
+  formData: PropTypes.string,
 	humidity: PropTypes.string,
 	timestamp: PropTypes.string,
-  value: PropTypes.number,
+  pathname: PropTypes.string,
+  search: PropTypes.string,
+  hash: PropTypes.string,
 };
 
 HomePage.defaultProps = {
@@ -58,18 +68,20 @@ HomePage.defaultProps = {
 
 
 function mapStateToProps(state){
-
 	return {
 		humidity: state.get('humidity').get('humidity'),
 		timestamp: state.get('humidity').get('timestamp'),
-    value: state.get('button').get('value'),
+    pathname: state.get('route').get('location').get('pathname'),
+    search: state.get('route').get('location').get('search'),
+    hash: state.get('route').get('location').get('hash'),
+    formData: state.get('form').get('formData')
 	};
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getHumidity: () => {humidityActions.getHumidity(dispatch)},
-    buttonClick: () => {dispatch(buttonActions.buttonClickAction())}
+    formChanged: (formData) => {dispatch(formActions.formChangedAction(formData))}
   };
 }
 
