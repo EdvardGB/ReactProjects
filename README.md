@@ -1,6 +1,6 @@
 # React & Redux
 
-Small weekend project to display how Redux store and React props cooperte.
+Small weekend project to display how Redux store and React props cooperate.
 
 ## Containers to focus on:
 
