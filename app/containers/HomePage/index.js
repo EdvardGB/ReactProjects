@@ -26,6 +26,7 @@ import * as formActions from '../../actions/formActions';
 import messages from './messages';
 import Humidity from './humidity';
 import FormComponent from './Form/form';
+import Car from './car/car';
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   
@@ -48,6 +49,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
             <div>
               <FormComponent formData={this.props.formData} formChanged={this.props.formChanged}/>
             </div>
+            <Car/>
         </div>    
       </div>
     );
