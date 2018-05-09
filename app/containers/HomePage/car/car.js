@@ -28,6 +28,7 @@ export default class Car extends React.PureComponent { // eslint-disable-line re
 				<Button id="R" onClick={this.handleClick}>Right</Button>
 				<Button id="F" onClick={this.handleClick}>Forward</Button>
 				<Button id="B" onClick={this.handleClick}>Backwards</Button>
+				<Button id="S" onClick={this.handleClick}>Stopp</Button>
 	      	</div>
 	    );
 	}

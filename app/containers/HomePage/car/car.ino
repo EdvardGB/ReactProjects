@@ -70,7 +70,26 @@ void loop()    {
   int httpCode = http.GET();
   if (httpCode > 0){
     String raw = http.getString();
+    Serial.println(raw[13]);
     if(raw[13] == 'F' and !motor){
+      toggleMotor();
+    }else if(raw[13] == 'R' and pos != 150){
+       Serial.print("Right, pos = ");
+       Serial.println(pos);
+       while(pos < 150){
+        pos = pos+1;
+        myservo.write(pos);
+        delay(5);
+       }
+    }else if(raw[13] == 'L' and pos != 30){
+       Serial.println("Left, pos = ");
+       Serial.println(pos);
+       while(pos > 30){
+        pos = pos-1;
+        myservo.write(pos);
+        delay(5);
+       }
+    }else if (raw[13] == 'S' and motor){
       toggleMotor();
     }
     http.end();  
