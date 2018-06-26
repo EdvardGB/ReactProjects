@@ -27,32 +27,37 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import Ingredient from './ingredient.js'
+
 
 import { connect } from 'react-redux';
+
+import * as ingredientActions from '../../actions/ingredientActions';
+
 
 class FeedMe extends React.PureComponent { 
 	constructor(props) {
 	    super(props);
   	}
 
+	componentDidMount(){
+		this.props.addIngredientToFridge(new Ingredient('dispatch'))
+	}
+
 	render() {
 		const {
-			shelf
+			ingredients
 		} = this.props
 		return (
 			<div>
-				{shelf.forEach(value => {
-					console.log(value)
-					return (<div id="test">hello</div>) //foreach nryr seg ikke om return, finn en annen måte
-					})
-				}
+				{console.log(ingredients)}
 	      	</div>
 	    );
 	}
 }
 
 FeedMe.propTypes = {
-	shelf: PropTypes.object,
+	ingredients: PropTypes.object,
 };
 
 FeedMe.defaultProps = {
@@ -61,12 +66,13 @@ FeedMe.defaultProps = {
 
 function mapStateToProps(state){
 	return {
-		shelf: state.get('fridge').get('shelf')
+		ingredients: state.get('fridge').get('ingredients')
 	};
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+	addIngredientToFridge: (ingredient) => {ingredientActions.addIngredientToFridge(dispatch, ingredient)},
   };
 }
 
