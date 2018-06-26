@@ -43,6 +43,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
       <div>
       <div>
         <NavLink to="/SidePage">SidePage</NavLink>
+        <NavLink to="/Connect">Connect</NavLink>
           </div>
           <div> 
             <Humidity humidity={this.props.humidity} timestamp={this.props.timestamp}/>

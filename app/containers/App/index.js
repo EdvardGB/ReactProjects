@@ -14,17 +14,20 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from '../HomePage/Loadable';
-import SidePage	from '../Sidepage/Loadable';
-import NotFoundPage from '../NotFoundPage/Loadable';
+import HomePage from 'containers/HomePage/Loadable';
+import SidePage	from 'containers/Sidepage/Loadable';
+import Connect from 'containers/Connect/Loadable';
+import FeedMe from 'containers/FeedMe/Loadable';
+import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 export default function App() {
   return (
     <div>
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={FeedMe} />
         <Route exact path="/HomePage" component={HomePage} />
         <Route exact path="/SidePage" component={SidePage} />
+        <Route exact path="/Connect" component={Connect} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>

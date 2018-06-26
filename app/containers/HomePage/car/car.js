@@ -11,7 +11,7 @@ export default class Car extends React.PureComponent { // eslint-disable-line re
   	publish(command){
   		let publicKey = "WXVMZNDj2jCX86J039D6f6a1ek4"
   		let privateKey = "0npdaXgQjQTLMxVKrOBxiwbGrpO"
-  		let postUrl = "http://phant.labben.org:8090/input/" + publicKey + "?private_key=" + privateKey + "&command=" + command
+  		let postUrl = "http://phant.labben.org:8090/input/" +  "?private_key=" + privateKey + "&command=" + command
   		fetch(postUrl) 
   		console.log("published:", command)
   	}
