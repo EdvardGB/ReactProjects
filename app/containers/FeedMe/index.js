@@ -28,12 +28,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Ingredient from './ingredient.js'
-
+import DB from './db.js'
+import IngredientComponent from './components/ingredientComponent';
 
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
 
 import * as ingredientActions from '../../actions/ingredientActions';
 
+let db = new DB
 
 class FeedMe extends React.PureComponent { 
 	constructor(props) {
@@ -41,7 +44,13 @@ class FeedMe extends React.PureComponent {
   	}
 
 	componentDidMount(){
-		this.props.addIngredientToFridge(new Ingredient('dispatch'))
+		db.data.forEach(element => {
+			this.props.addIngredientToFridge(new Ingredient(element.name, element.info, element.param))
+		});
+	}
+
+	buttonClick(){
+		this.props.addIngredientToFridge(new Ingredient(Math.random(), "b", "c"))
 	}
 
 	render() {
@@ -50,7 +59,14 @@ class FeedMe extends React.PureComponent {
 		} = this.props
 		return (
 			<div>
-				{console.log(ingredients)}
+				<Button onClick={this.buttonClick.bind(this)} bsStyle="info">add</Button>
+				{	
+					ingredients.map((element, id) => {
+						element = {ingredient : element }
+						return(<IngredientComponent key={id} {...element} remove={this.props.removeIngredientFromFridge}/>)
+					})
+				}
+				
 	      	</div>
 	    );
 	}
@@ -73,6 +89,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch) {
   return {
 	addIngredientToFridge: (ingredient) => {ingredientActions.addIngredientToFridge(dispatch, ingredient)},
+	removeIngredientFromFridge: (ingredient =>{ingredientActions.removeIngredientFromFridge(dispatch, ingredient)})
   };
 }
 
