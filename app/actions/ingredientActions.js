@@ -1,3 +1,8 @@
+import IndexedDBInstance from '../services/indexDBService';
+import Ingredient from '../containers/FeedMe/ingredient';
+
+const offlineStore = 'OfflineStorage'
+
 function AddToFridge(ingredient){
  return {
     type: 'ADD_INGREDIENT_TO_FRIDGE',
@@ -16,8 +21,13 @@ export function removeIngredientFromFridge(dispatch, ingredient){
     dispatch(RemoveFromFridge(ingredient))
 }
 
+
 export function addIngredientToFridge(dispatch, ingredient) {
-    //promise something, .then dispatch
-	dispatch(AddToFridge(ingredient)) 
+    IndexedDBInstance().then(instance => 
+        instance.add(offlineStore, ingredient)   
+    ).then(
+        dispatch(AddToFridge(ingredient)) 
+    )
+
 } 
 

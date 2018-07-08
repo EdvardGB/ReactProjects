@@ -14,8 +14,8 @@
 	Opggaver:
 	- Database av oppskrifter
 		- Automatisk henting av oppskrifter fra et API og lagre ingredienser som objekt
-	- Kjøleskap klasse som inneholder ingredienser
-	- Modell for oppskrifer class interface
+	- Kjøleskap klasse som inneholder ingredienser - begynt
+	- Modell for oppskrifer class interface - begynt
 	- Handleliste
 		- Objekt med ingredienser
 	- 
@@ -27,14 +27,17 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Ingredient from './ingredient.js'
+import Ingredient from './Ingredient'
 import DB from './db.js'
 import IngredientComponent from './components/ingredientComponent';
+import Recipe from './recipe';
 
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
 import * as ingredientActions from '../../actions/ingredientActions';
+import * as recipeActions from '../../actions/recipeActions';
+import * as apiActions from '../../actions/apiActions';
 
 let db = new DB
 
@@ -44,29 +47,19 @@ class FeedMe extends React.PureComponent {
   	}
 
 	componentDidMount(){
-		db.data.forEach(element => {
-			this.props.addIngredientToFridge(new Ingredient(element.name, element.info, element.param))
-		});
+
 	}
 
-	buttonClick(){
-		this.props.addIngredientToFridge(new Ingredient(Math.random(), "b", "c"))
+
+	getClick(){
+		this.props.getIngredient(9329)
 	}
 
 	render() {
-		const {
-			ingredients
-		} = this.props
+
 		return (
 			<div>
-				<Button onClick={this.buttonClick.bind(this)} bsStyle="info">add</Button>
-				{	
-					ingredients.map((element, id) => {
-						element = {ingredient : element }
-						return(<IngredientComponent key={id} {...element} remove={this.props.removeIngredientFromFridge}/>)
-					})
-				}
-				
+				<button onClick={this.getClick.bind(this)}>Click me</button>
 	      	</div>
 	    );
 	}
@@ -74,6 +67,7 @@ class FeedMe extends React.PureComponent {
 
 FeedMe.propTypes = {
 	ingredients: PropTypes.object,
+	recipes: PropTypes.object
 };
 
 FeedMe.defaultProps = {
@@ -82,14 +76,17 @@ FeedMe.defaultProps = {
 
 function mapStateToProps(state){
 	return {
-		ingredients: state.get('fridge').get('ingredients')
+		ingredients: state.get('fridge').get('ingredients'),
+		recipes: state.get('recipe').get('recipies')
 	};
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+	getIngredient: (id) => {apiActions.getIngredient(dispatch, id)},
 	addIngredientToFridge: (ingredient) => {ingredientActions.addIngredientToFridge(dispatch, ingredient)},
-	removeIngredientFromFridge: (ingredient =>{ingredientActions.removeIngredientFromFridge(dispatch, ingredient)})
+	removeIngredientFromFridge: (ingredient) =>{ingredientActions.removeIngredientFromFridge(dispatch, ingredient)},
+	createRecipe : (recipe) => {recipeActions.createRecipe(dispatch,recipe)}
   };
 }
 

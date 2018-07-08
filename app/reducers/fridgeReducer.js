@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 import Ingredient from '../containers/FeedMe/ingredient.js'
 
+import IndexedDBInstance from '../services/indexDBService';
 
 const fridgeInitialState = fromJS({
   ingredients: []
@@ -31,6 +32,7 @@ function addIngredient(oldState, action){
   let ingredient = action.data
   ingredients = ingredients.push(ingredient)
   state = state.set('ingredients', ingredients)
+  console.log(state)
   return state
 }
 

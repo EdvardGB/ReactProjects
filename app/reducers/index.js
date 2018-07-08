@@ -10,7 +10,8 @@ import { routeReducer } from './routeReducer';
 import { humidityReducer } from './humidityReducer';
 import { buttonReducer } from './buttonReducer';
 import { formReducer } from './formReducer';
-import { fridgeReducer } from './fridgeReducer';
+import { fridgeReducer } from './fridgeReducer'; 
+import { recipeReducer } from './recipeReducer'; 
 
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 
@@ -23,6 +24,7 @@ export default function createReducer(injectedReducers) {
     button: buttonReducer,
     form: formReducer,
     fridge: fridgeReducer,
+    recipe: recipeReducer,
     ...injectedReducers,
   });
 }

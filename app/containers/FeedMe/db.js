@@ -17,6 +17,7 @@ export default class DB {
                 param: "param"
             }
         ]
+
     }
     
     add(object){
