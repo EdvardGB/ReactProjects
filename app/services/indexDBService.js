@@ -159,7 +159,7 @@ class OfflineDatabase {
                 var dbTransaction = db.transaction(storeName, 'readwrite');
                 var dbStore = dbTransaction.objectStore(storeName);
                 var dbRequest = dbStore.add(value/*, key*/);
-
+                
                 dbTransaction.oncomplete = (e) => {
                     resolve(dbRequest.result);
                 }

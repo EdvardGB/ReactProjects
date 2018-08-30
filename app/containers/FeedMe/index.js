@@ -52,7 +52,9 @@ class FeedMe extends React.PureComponent {
 
 
 	getClick(){
-		this.props.getIngredient(9329)
+		
+		this.props.getAPI('recipes/2653')
+		
 	}
 
 	render() {
@@ -83,7 +85,8 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch) {
   return {
-	getIngredient: (id) => {apiActions.getIngredient(dispatch, id)},
+	getAPI: (url) => {apiActions.getAPI(dispatch, url)},
+	getAPIIngredient: (id) => {apiActions.getIngredient(dispatch, id)},
 	addIngredientToFridge: (ingredient) => {ingredientActions.addIngredientToFridge(dispatch, ingredient)},
 	removeIngredientFromFridge: (ingredient) =>{ingredientActions.removeIngredientFromFridge(dispatch, ingredient)},
 	createRecipe : (recipe) => {recipeActions.createRecipe(dispatch,recipe)}
